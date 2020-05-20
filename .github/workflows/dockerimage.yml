@@ -1,0 +1,21 @@
+name: Pulls repo + build image + push to dockerhub 
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:          
+    - uses: actions/checkout@v2
+    - name: Login to Docker Registry
+      run: echo ${{ secrets.DOCKER_TOKEN }} | docker login -u ${{ secrets.DOCKER_LOGIN }} --password-stdin
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag eif0/k3lab-docs:$(date +%y.%m.%d-%s) --tag eif0/k3lab-docs:latest
+    - run: docker push eif0/k3lab-docs

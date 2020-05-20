@@ -1,0 +1,17 @@
+<footer class="footer">
+  <div class="footer__inner">
+    {{ if $.Site.Copyright }}
+      <div class="copyright copyright--user">{{ $.Site.Copyright | safeHTML }}</div>
+    {{else}}
+      {{ partial "logo_footer.html" . }}
+      <div class="copyright">
+<!--        <span> {{ now.Year }} </span>
+-->        <span>.Built with ❤ using <a TARGET="_blank" href="https://k3s.io/">k3s</a>.</span>
+
+      </div>
+    {{end}}
+  </div>
+</footer>
+
+<script src="{{ "assets/main.js" | absURL }}"></script>
+<script src="{{ "assets/prism.js" | absURL }}"></script>

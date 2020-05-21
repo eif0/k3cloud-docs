@@ -2,7 +2,7 @@
 
 Sources pushed or PRs to this repo get automatically built into static html files using hugo via the Dockerfile (1), and they get automatically pushed to [dockerhub/eif0/k3cloud-docs](https://hub.docker.com/r/eif0/k3cloud-docs/) tagging the version number defined in .env, this whole pipeline is managed via GitHub Actions (3).
 
-By following this way, contributions, proof-reading and new content can be added to the documentation by any third party.
+By following this deployment schema, contributions, proof-reading and new content can be added to the documentation by any third party.
 
 But... how?
 1. Add your new content or modify anything under `sources/content/posts` within this repo.

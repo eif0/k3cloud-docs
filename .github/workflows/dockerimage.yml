@@ -2,13 +2,10 @@ name: Pulls repo + build image + push to dockerhub
 
 on:
   push:
-    branches:
-      - master
-      - test
+    branches: [ master ]
   pull_request:
-    branches: 
-      - master
-      - test
+    branches: [ master ]
+
 jobs:
 
   build:

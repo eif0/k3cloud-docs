@@ -54,10 +54,13 @@ This repo is currently deployed in accordance to the following basic workflows:
 
 	When a new version is out (after the GH Action pipeline runs, when we have the new image built and pushed to DockerHub), we need to update the cluster resource definitions in order to deploy the newly built image into it.
 	
-	We can do it by either pushing the resource manifest changes to the k3cloud repo, or merging a Pull Request which updates the definition files.
+	We can do it by either pushing the resource manifest changes to the k3cloud repo, or merging an external Pull Request which updates the definition files.  
+	
 	When changes are pushed/merged, ArgoCD (who actively monitors the repo state) picks up the changes and apply them to the cluster, in accordance to the following criteria:
-	- If the changes are done in [k3cloud](https://github.com/k3cloud/k3cloud)'s `master` branch, all updated .yaml files are applied to the PRD Cluster (currently located at https://k3cloud.gq / https://docs.k3cloud.gq)
-	- If the changes are done in [k3cloud](https://github.com/k3cloud/k3cloud)'s `test` branch, all updated .yaml files are applied to the TEST Cluster (currently located at https://k3lab.gq / https://docs.k3lab.gq)
+	- If the changes are done in [k3cloud](https://github.com/k3cloud/k3cloud)'s `master` branch, all updated .yaml files are picked up by the ArgoCD deployment running in the PROD Cluster (which monitors only k3cloud's `master` branch).  
+	All the updated resources are then applied to the PRD Cluster (currently located at https://k3cloud.gq / https://docs.k3cloud.gq)
+	- If the changes are done in [k3cloud](https://github.com/k3cloud/k3cloud)'s `test` branch, all updated .yaml files are picked up by the ArgoCD deployment running in the TEST Cluster (which monitors only k3cloud's `test` branch).  
+	All the updated resources are then applied to the TEST Cluster (currently located at https://k3lab.gq / https://docs.k3lab.gq)
 	
 
 ## Files and Resources

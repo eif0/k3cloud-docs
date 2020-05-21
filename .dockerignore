@@ -1,0 +1,6 @@
+public/
+_public/
+_public-old/
+.git/
+.gitmodules/
+.gitignore

@@ -1,4 +1,4 @@
-baseurl = "https://docs.k3lab.gq"
+baseurl = "https://docs.k3cloud.gq"
 languageCode = "en-us"
 canonifyurls = true
 theme = "hello-friend"
@@ -15,7 +15,7 @@ publishDir = "/home/renato/Stuff/dev/github-com/eif0/static-sites/docs/_public/"
 
 [languages]
   [languages.en]
-    title = "k3lab's docs & stuff"
+    title = "k3cloud's docs & stuff"
     subtitle = ""
     keywords = ""
     copyright = ""
@@ -27,7 +27,7 @@ publishDir = "/home/renato/Stuff/dev/github-com/eif0/static-sites/docs/_public/"
     olderPosts = "Older posts"
 
     [languages.en.params.logo]
-      logoText = "docs.k3lab.gq"
+      logoText = "docs.k3cloud.gq"
       logoHomeLink = "/"
     # or
     #

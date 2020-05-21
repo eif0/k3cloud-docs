@@ -2,9 +2,9 @@ name: Pulls repo + build image + push to dockerhub
 
 on:
   push:
-    branches: [ master ]
+    branches: [ test ]
   pull_request:
-    branches: [ master ]
+    branches: [ test ]
 
 jobs:
 
@@ -20,5 +20,5 @@ jobs:
       run: |
         cat .env | grep VERSION= | head -n1| grep -o '".*"' | sed 's/"//g' > VERSION
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag eif0/k3lab-docs:$(cat VERSION) --tag eif0/k3lab-docs:latest
-    - run: docker push eif0/k3lab-docs
+      run: docker build . --file Dockerfile --tag eif0/k3cloud-docs:$(cat VERSION) --tag eif0/k3cloud-docs:latest
+    - run: docker push eif0/k3cloud-docs

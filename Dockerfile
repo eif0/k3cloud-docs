@@ -7,7 +7,7 @@ RUN apt-get install hugo -y
 COPY ./sources /static-site
 
 RUN hugo -v --source=/static-site --destination=/static-site/public
-RUN sed -i 's/2019-01-15//g' /static-site/public/about/index.html
+RUN VERSION=$(cat version);sed -i "s/2019-01-15/v.$VERSION/g" /static-site/public/about/index.html
 
 # Serve the public files using nginx:alpine
 FROM nginx:stable-alpine

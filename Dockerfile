@@ -8,7 +8,7 @@ COPY ./sources /static-site
 COPY .env ./
 
 RUN hugo -v --source=/static-site --destination=/static-site/public
-RUN VERSION=$(cat .env | grep VERSION= | head -n1| grep -o '".*"' | sed 's/"//g');sed -i "s/2019-01-15/v.$VERSION/g" /static-site/public/about/index.html
+RUN VERSION=$(cat .env | grep VERSION= | head -n1| grep -o '".*"' | sed 's/"//g');sed -i "s/2019-01-15/Image: <a href='https://hub.docker.com/r/eif0/k3cloud-docs'>v.$VERSION</a>/g" /static-site/public/about/index.html
 
 
 # Serve the public files using nginx:alpine

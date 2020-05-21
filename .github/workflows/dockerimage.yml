@@ -18,7 +18,7 @@ jobs:
       run: echo ${{ secrets.DOCKER_TOKEN }} | docker login -u ${{ secrets.DOCKER_LOGIN }} --password-stdin
     - name: Define variables
       run: |
-        echo "$(cat VERSION)" > VERSION
+        cat .env | grep VERSION= | head -n1| grep -o '".*"' | sed 's/"//g' > VERSION
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag eif0/k3lab-docs:$(cat VERSION) --tag eif0/k3lab-docs:latest
     - run: docker push eif0/k3lab-docs

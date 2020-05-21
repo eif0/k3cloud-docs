@@ -44,6 +44,10 @@
         {{ end }}
       {{ end }}
 
+    <div class="post-content">
+      {{ .Summary }}
+    </div>
+
       <div class="post-content">
         {{ with .Description }}
           {{ . | markdownify }}

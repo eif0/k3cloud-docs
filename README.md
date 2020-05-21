@@ -10,4 +10,4 @@ this is used for:
 
 
 #### Image build instructions that use hugo's /public + nginx:
-Dockerfile
+```Dockerfile```

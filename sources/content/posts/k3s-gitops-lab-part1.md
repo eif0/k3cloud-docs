@@ -314,7 +314,7 @@ Your DNS reccords for `foaas.sample.YOUR.CUSTOM.DOMAIN` should point to your Clu
     Side notes:
     - In addition to interfacing with the API via curl/wget/whatever, you can check the valid parameters and documentation browsing to https://foaas.sample.k3cloud.gq.
     (Once again, remember to run the tests using your newly created custom domain).
-    - As you can see in `foaas-sample-deploy.yaml` the deployed FOAAS image is a custom build available in dockerhub.com/eif0/foaas, this is a 100% functional build I run with extra configs and settings, but feel free to use the original repo and build your own image if you prefer. More on how to manage pipelines and deploy your custom images to k3s in future articles.
+    - As you can see in `foaas-sample-deploy.yaml` the deployed FOAAS image is a custom build available in [my dockerhub](https://hub.docker.com/r/eif0/foaas), this is a 100% functional build I run with extra configs and settings, but feel free to use the original repo and build your own image if you prefer. More on how to manage pipelines and deploy your custom images to k3s in future articles.
 
 
 

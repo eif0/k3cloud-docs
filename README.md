@@ -5,9 +5,10 @@ Sources pushed or PRs to this repo get automatically built into static html file
 By following this deployment schema, contributions, proof-reading and new content can be added to the documentation by any third party.
 
 But... how?
-1. Add your new content or modify anything under `sources/content/posts` within this repo.
-2. Do a Pull Request with the changes.
-3. Once the maintainers approve the PR, your new changes will be picked up by the CI/CD pipelines descibed next and will be built into Docker Image, which later on will be deployed to the respective PRD/TEST cluster.
+1. Clone this repo
+2. Add your new content or modify anything under `sources/content/posts` within this repo.
+3. Do a Pull Request with the changes.
+4. Once the maintainers approve the PR, your new changes will be picked up by the CI/CD pipelines descibed next and will be built into Docker Image, which later on will be deployed to the respective PRD/TEST cluster.
 
 ## Configurations & Components
 

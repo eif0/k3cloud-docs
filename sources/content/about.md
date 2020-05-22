@@ -24,7 +24,7 @@ Some tools that we'll be running in our k3s cluster:
 - Demo APIs and web services in order to load/perf testing
 - Development Environment #1: Embed VSCode + shell
 - Development Environment #2: Embed Theia + shell
-- Rancher, admin board (although 100% of the documentation will be covered using the CLI)  
+- Rancher, admin board (although 100% of the documentation will be covered using the CLI).  
   alt: Portainer, admin board
 - MinIO, blob storage (AWS S3 alike) 
 

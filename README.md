@@ -87,5 +87,4 @@ this is used for:
 
 
 ##### Image build instructions that use hugo's /public + nginx:  
-(Multi-Stage Build)
-```Dockerfile```
+```Dockerfile```(Multi-Stage Build)

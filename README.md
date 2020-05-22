@@ -17,7 +17,7 @@ All sources, configs and definitions to build the repo are available within itse
 Pipeline-related configs and files:
 ```
 .
-├── Dockerfile (1)
+├── Dockerfile [multi-stage build] (1)
 ├── .env (2)
 └── .github
     └── workflows
@@ -86,5 +86,6 @@ this is used for:
 - the version reference in the -deploy.yaml manifest files.
 
 
-##### Image build instructions that use hugo's /public + nginx:
+##### Image build instructions that use hugo's /public + nginx:  
+(Multi-Stage Build)
 ```Dockerfile```

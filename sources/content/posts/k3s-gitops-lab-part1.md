@@ -1,7 +1,7 @@
 ---
 title: "k3s GitOps Lab | Part 1: Cluster Bootstraping + API PoC Deployment"
 date: 2020-05-21T16:54:51+01:00
-draft: false
+draft: true
 showthedate: true
 categories: ["k3s", "civo"]
 

@@ -5,4 +5,3 @@ showthedate: false
 draft: false
 ---
 
-Git-based documentation system.

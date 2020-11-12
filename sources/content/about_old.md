@@ -15,6 +15,7 @@ In any case, the main goal is to go from I-dont-even-have-a-spare-vm to a comple
 
 Some tools that we'll be running in our k3s cluster:
 - Jenkins
+- JenkinsX
 - ArgoCD, for k3s management
 - Harbor, to host our own Registry 
 - Prometheus+Grafana7

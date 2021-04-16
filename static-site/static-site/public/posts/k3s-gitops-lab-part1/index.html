@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>k3s GitOps Lab | Part 1: Cluster Bootstraping &#43; API PoC Deployment :: k3cloud&#39;s docs &amp; stuff</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="This article covers:
+ Bootstraping a new k3s cluster from scratch  creating a free cluster using civo&amp;rsquo;s #kube100   Checking the cluster state Deploy a PoC test API using manifest files (.yaml) General testing "/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="https://docs.k3cloud.gq/posts/k3s-gitops-lab-part1/" />
+
+
+
+
+
+<link rel="stylesheet" href="https://docs.k3cloud.gq/assets/style.css">
+
+
+<link rel="stylesheet" href="https://docs.k3cloud.gq/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://docs.k3cloud.gq/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="https://docs.k3cloud.gq/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="k3s GitOps Lab | Part 1: Cluster Bootstraping &#43; API PoC Deployment"/>
+<meta name="twitter:description" content="This article covers:
+
+Bootstraping a new k3s cluster from scratch
+
+creating a free cluster using civo&rsquo;s #kube100
+
+
+Checking the cluster state
+Deploy a PoC test API using manifest files (.yaml)
+General testing
+"/>
+
+
+
+<meta property="og:title" content="k3s GitOps Lab | Part 1: Cluster Bootstraping &#43; API PoC Deployment" />
+<meta property="og:description" content="This article covers:
+
+Bootstraping a new k3s cluster from scratch
+
+creating a free cluster using civo&rsquo;s #kube100
+
+
+Checking the cluster state
+Deploy a PoC test API using manifest files (.yaml)
+General testing
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://docs.k3cloud.gq/posts/k3s-gitops-lab-part1/" />
+<meta property="article:published_time" content="2020-05-21T16:54:51+01:00" />
+<meta property="article:modified_time" content="2020-05-21T16:54:51+01:00" /><meta property="og:site_name" content="k3cloud&#39;s docs &amp; stuff" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="https://docs.k3cloud.gq/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">docs.k3cloud.gq</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+      
+        <ul class="menu__sub-inner">
+          <li class="menu__sub-inner-more-trigger">
+            more stuff
+            <span class="menu__sub-inner-more-trigger-icon"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+          </li>
+
+          <ul class="menu__sub-inner-more hidden">
+            
+              
+                <li><a href="https://docs.k3cloud.gq/about">&gt; about</a></li>
+              
+            
+              
+                <li><a href="https://docs.k3cloud.gq/archives">&gt; archives</a></li>
+              
+            
+          </ul>
+        </ul>
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="https://docs.k3cloud.gq/about">&gt; about</a></li>
+      
+    
+      
+        <li><a href="https://docs.k3cloud.gq/archives">&gt; archives</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="https://docs.k3cloud.gq/posts/k3s-gitops-lab-part1/">k3s GitOps Lab | Part 1: Cluster Bootstraping + API PoC Deployment</a></h1>
+    <div class="post-meta">
+      
+        <span class="post-date">
+          2020-05-21
+        </span>
+
+        
+          
+        
+      
+
+      
+      
+    </div>
+
+    
+
+    
+
+    <div class="post-content">
+      <p>This article covers:</p>
+<ul>
+<li>Bootstraping a new k3s cluster from scratch
+<ul>
+<li>creating a free cluster using civo&rsquo;s #kube100</li>
+</ul>
+</li>
+<li>Checking the cluster state</li>
+<li>Deploy a PoC test API using manifest files (.yaml)</li>
+<li>General testing</li>
+</ul>
+<h3 id="kubernetes-gitops-series">Kubernetes GitOps Series:</h3>
+<ul>
+<li><a href="https://docs.k3cloud.gq/posts/k3s-gitops-lab-part1/">k3s GitOps Lab | Part 1: Cluster Bootstraping + API PoC Deployment</a></li>
+<li>k3s GitOps Lab | Part 2: k3s + GitOps using ArgoCD</li>
+<li>k3s GitOps Lab | Part 3: Deploying Custom Builds</li>
+</ul>
+<h1 id="requirements">Requirements</h1>
+<ul>
+<li>A kubernetes (k3s/k8s) <strong>cluster</strong>.<br>
+For this lab&rsquo;s purpose there&rsquo;s no diff between using k3s and k8s.
+<ul>
+<li>Hint: you can apply for civo&rsquo;s <a href="https://www.civo.com/kube100">#kube100</a> to get some free credit in order to test their amazing k3s managed solution. To make this guide easily reproducible for everyone this is what we&rsquo;re going to use on the step-by-step guide.</li>
+</ul>
+</li>
+<li><code>kubectl</code> installed.</li>
+<li>civo&rsquo;s CLI tool (<code>civo</code>) installed. If you&rsquo;re not using civo&rsquo;s #kube100 clusters you can skip this.</li>
+</ul>
+<h4 id="nice-to-haves">Nice-To-Have&rsquo;s</h4>
+<ul>
+<li>A <strong>custom domain name</strong> pointing to our cluster.<br>
+You can also use the fqdn provided by civo when we spin up the cluster, although having a custom domain name won&rsquo;t make any diff config/setup-wise, it&rsquo;s great to have a specific DNS for the cluster, in order to mimic real-world scenarios.
+<ul>
+<li>Hint: If you don&rsquo;t have one, you can register a free DNS using <a href="https://freenom.com">Freenom</a>, this is what I&rsquo;m going to use to follow this series.</li>
+</ul>
+</li>
+<li><strong>kubectx</strong> + <strong>kubens</strong> installed in order to make it easy to switch contexts.<br>
+These tools are not mandatory but are going to be super helpful to have at hand for the following howtos where we will have different environments (prod + test) managed by our GitOps pipelines.</li>
+</ul>
+<h1 id="cluster-setup">Cluster Setup</h1>
+<blockquote>
+<p>You can skip this section altogether if you&rsquo;re not using civo&rsquo;s k3s.</p>
+<ul>
+<li>Important: If you bring your own Cluster, remember to install Traefik, cert-manager and metrics-server if you wanna follow this step-by-step guide and reproduce each step.</li>
+</ul>
+</blockquote>
+<ol>
+<li>
+<p>Get your civo APIKEY via the webUI (<a href="https://www.civo.com/account/security">link</a>)</p>
+</li>
+<li>
+<p>Add your APIKEY to civo&rsquo;s CLI tool<br>
+Hint: You can change the APIKEY name (<code>k3cloud</code>) if you feel like it</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ civo apikey add k3cloud &lt;your-api-secret&gt;
+</code></pre></div><p>You can also check your current apikey, running:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ civo apikey list
+</code></pre></div><p>Once we have civo&rsquo;s CLI up and running, we can proceed to bootstrap our new cluster.</p>
+</li>
+<li>
+<p>Create a new cluster with Traefik and metrics-server installed.<br>
+In addition we save + switch contexts to use the new cluster</p>
+<p>Hints:</p>
+<ul>
+<li>You can change the cluster name (<code>k3cloud</code>) if you feel like it.</li>
+<li>You can also bootstrap the cluster with just a couple keystrokes using civo&rsquo;s management webUI, both <code>metrics-server</code> and <code>Traefik</code> are selected to be installed by default when using this method.</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ civo k3s create k3cloud --size<span style="color:#f92672">=</span>g2.medium --nodes<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> --applications<span style="color:#f92672">=</span>Traefik,metrics-server --wait --save --switch
+</code></pre></div><p>Once the cluster is created, you should get an output similar to:</p>
+<pre><code>&gt;   Building new Kubernetes cluster k3cloud: Done
+&gt;    Created Kubernetes cluster k3cloud in 02 min 21 sec
+&gt;    Merged config into ~/.kube/config and switched context to k3cloud
+</code></pre><p>Total cluster creation time is around 2-3min.</p>
+<p>You can check which resources are currently running in the cluster.<br>
+Ideally you should wait for all their states to be ok before proceeding, but it&rsquo;s not mandatory.</p>
+<ul>
+<li>To check the nodes status:</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ kubectl get no
+
+NAME               STATUS   ROLES    AGE     VERSION
+kube-master-40e4   Ready    master   3h15m   v1.16.3-k3s.2
+kube-node-3daf     Ready    &lt;none&gt;   3h15m   v1.16.3-k3s.2
+kube-node-715c     Ready    &lt;none&gt;   3h15m   v1.16.3-k3s.2
+
+</code></pre></div></li>
+</ol>
+<ul>
+<li>To check the status of PODs and Deployments:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ kubectl get po,deploy -A
+
+NAMESPACE     NAME                                          READY   STATUS      RESTARTS   AGE
+kube-system   pod/metrics-server-6d684c7b5-4lndf            1/1     Running     <span style="color:#ae81ff">0</span>          5m4s
+kube-system   pod/local-path-provisioner-58fb86bdfd-6k5v7   1/1     Running     <span style="color:#ae81ff">0</span>          5m4s
+kube-system   pod/helm-install-traefik-zpsw2                0/1     Completed   <span style="color:#ae81ff">0</span>          5m4s
+kube-system   pod/svclb-traefik-vkw7b                       3/3     Running     <span style="color:#ae81ff">0</span>          4m23s
+kube-system   pod/svclb-traefik-f6pq9                       3/3     Running     <span style="color:#ae81ff">0</span>          4m23s
+kube-system   pod/svclb-traefik-cbptp                       3/3     Running     <span style="color:#ae81ff">0</span>          4m23s
+kube-system   pod/coredns-d798c9dd-l8q8n                    1/1     Running     <span style="color:#ae81ff">0</span>          5m4s
+kube-system   pod/traefik-65bccdc4bd-l45qk                  1/1     Running     <span style="color:#ae81ff">0</span>          4m23s
+    
+NAMESPACE     NAME                                     READY   UP-TO-DATE   AVAILABLE   AGE
+kube-system   deployment.apps/metrics-server           1/1     <span style="color:#ae81ff">1</span>            <span style="color:#ae81ff">1</span>           5m16s
+kube-system   deployment.apps/local-path-provisioner   1/1     <span style="color:#ae81ff">1</span>            <span style="color:#ae81ff">1</span>           5m16s
+kube-system   deployment.apps/coredns                  1/1     <span style="color:#ae81ff">1</span>            <span style="color:#ae81ff">1</span>           5m16s
+kube-system   deployment.apps/traefik                  1/1     <span style="color:#ae81ff">1</span>            <span style="color:#ae81ff">1</span>           4m23s
+            
+</code></pre></div></li>
+</ul>
+<ol start="4">
+<li>
+<p>Install <code>cert-manager</code><br>
+For now we&rsquo;re going to deploy <code>cert-manager</code> using civo&rsquo;s CLI <code>applications</code> param.<br>
+To avoid vendor lock-in as much as possible, in the future we&rsquo;ll migrate this setup to deploy cert-manager using both helm v3 (not available by default in civo&rsquo;s k3s clusters) and I&rsquo;ll also cover how to deploy it the kubernetes way, using manifest (.yaml) resources definitions.</p>
+<p>In order to deploy cert-manager via civo&rsquo;s CLI, run:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ civo applications add cert-manager
+</code></pre></div><p>If you wanna check which other applications you have at your disposal, run:</p>
+<pre><code>$ civo applications list
+</code></pre><p>At the time of this writting, the available apps are:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">+----------------------+-------------+--------------+-----------------+--------------+
+| Name                 | Version     | Category     | Plans           | Dependencies |
++----------------------+-------------+--------------+-----------------+--------------+
+| cert-manager         | v0.11.0     | architecture | Not applicable  | Helm         |
+| Helm                 | 2.14.3      | management   | Not applicable  |              |
+| Jenkins              | 2.190.1     | ci_cd        | 5GB, 10GB, 20GB | Longhorn     |
+| KubeDB               | v0.12.0     | database     | Not applicable  | Longhorn     |
+| Kubeless             | 1.0.5       | architecture | Not applicable  |              |
+| kubernetes-dashboard | v2.0.0-rc7  | management   | Not applicable  |              |
+| Linkerd              | 2.5.0       | architecture | Not applicable  |              |
+| Longhorn             | 0.7.0       | storage      | Not applicable  |              |
+| Maesh                | Latest      | architecture | Not applicable  | Helm         |
+| MariaDB              | 10.4.7      | database     | 5GB, 10GB, 20GB | Longhorn     |
+| metrics-server       | <span style="color:#f92672">(</span>default<span style="color:#f92672">)</span>   | architecture | Not applicable  |              |
+| MinIO                | 2019-08-29  | storage      | 5GB, 10GB, 20GB | Longhorn     |
+| MongoDB              | 4.2.0       | database     | 5GB, 10GB, 20GB | Longhorn     |
+| OpenFaaS             | 0.18.0      | architecture | Not applicable  | Helm         |
+| Portainer            | beta        | management   | Not applicable  |              |
+| PostgreSQL           | 11.5        | database     | 5GB, 10GB, 20GB | Longhorn     |
+| prometheus-operator  | 0.35.0      | monitoring   | Not applicable  |              |
+| Rancher              | v2.3.0      | management   | Not applicable  |              |
+| Redis                | 3.2         | database     | Not applicable  |              |
+| Selenium             | 3.141.59-r1 | ci_cd        | Not applicable  |              |
+| Traefik              | <span style="color:#f92672">(</span>default<span style="color:#f92672">)</span>   | architecture | Not applicable  |              |
++----------------------+-------------+--------------+-----------------+--------------+
+   
+</code></pre></div><p>To avoid possible issues in the following steps, wait for all cert-manager resources to be up and in a ok state. To check, run:</p>
+<pre><code>watch -n1 &quot;kubectl get all -n cert-manager&quot;
+</code></pre><p>Once the all components are in an OK state, you should see smth similar to:</p>
+<pre><code>NAME                                           READY   STATUS    RESTARTS   AGE
+pod/cert-manager-55c44f98f-mqsr8               1/1     Running   0          9m57s
+pod/cert-manager-cainjector-576978ffc8-kmxvb   1/1     Running   0          9m57s
+pod/cert-manager-webhook-c67fbc858-6h9rd       1/1     Running   1          9m57s
+   
+NAME                           TYPE        CLUSTER-IP        EXTERNAL-IP   PORT(S)    AGE
+service/cert-manager           ClusterIP   192.168.182.200   &lt;none&gt;        9402/TCP   9m57s
+service/cert-manager-webhook   ClusterIP   192.168.154.29    &lt;none&gt;        443/TCP    9m57s
+   
+NAME                                      READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/cert-manager              1/1     1            1           9m57s
+deployment.apps/cert-manager-cainjector   1/1     1            1           9m57s
+deployment.apps/cert-manager-webhook      1/1     1            1           9m57s
+   
+NAME                                                 DESIRED   CURRENT   READY   AGE
+replicaset.apps/cert-manager-55c44f98f               1         1         1       9m57s
+replicaset.apps/cert-manager-cainjector-576978ffc8   1         1         1       9m57s
+replicaset.apps/cert-manager-webhook-c67fbc858       1         1         1       9m57s
+       
+</code></pre></li>
+</ol>
+<h1 id="deploying-a-poc-using-manifest-yaml-files">Deploying a PoC using manifest (.yaml) files</h1>
+<ol>
+<li>
+<p>Clone k3cloud&rsquo;s repo and chgdir to FOAAS&rsquo;s sample deployment</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ git clone https://github.com/k3cloud/k3cloud.git
+$ cd k3cloud/samples/foaas
+</code></pre></div></li>
+<li>
+<p>Review and customize FOAAS API manifest files</p>
+<p>Although you can change and update any part you want, only mandatory requisite is to update the ingress declaration manifest, as you will need to update the DNS name to your own.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ vim foaas-ingress.yaml
+</code></pre></div><p>After updating both iterations of the <code>host</code> key (replacing the <code>YOUR.CUSTOM.DOMAIN</code> value to match your custom domain), your <code>foaas-ingress.yaml</code> should look similar to:</p>
+<pre><code>    apiVersion: extensions/v1beta1
+    kind: Ingress
+    metadata:
+      name: foaas-sample-ingress
+      annotations:
+        cert-manager.io/issuer: foaas-sample-letsencrypt
+        kubernetes.io/ingress.class: &quot;traefik&quot;
+    spec:
+      tls:
+      - hosts:
+        - foaas.sample.YOUR.CUSTOM.DOMAIN
+        secretName: foaas-sample-secret
+      rules:
+      - host: foaas.sample.YOUR.CUSTOM.DOMAIN
+        http:
+          paths:
+          - path: /
+            backend:
+              serviceName: foaas-sample-svc
+              servicePort: 80
+       
+    ```    
+</code></pre></li>
+<li>
+<p>Update your DNS reccords<br>
+Your DNS reccords for <code>foaas.sample.YOUR.CUSTOM.DOMAIN</code> should point to your Cluster endpoint, you can check your cluster specs via the CLI, running:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ civo k3s show k3cloud
+</code></pre></div><p>(Of course, replace <code>k3cloud</code> for your cluster name)</p>
+<p>If you followed all steps up to now, your output should looks similar to:</p>
+<pre><code>                ID : 8bcc05ef-5f90-4cf9-b31c-7075ff6ed983
+              Name : k3cloud
+          # Nodes : 3
+              Size : g2.medium
+            Status : ACTIVE
+          Version : 1.0.0
+      API Endpoint : https://185.136.235.106:6443
+      DNS A record : 8bcc05ef-5f90-4cf9-b31c-7075ff6ed983.k8s.civo.com
+                    *.8bcc05ef-5f90-4cf9-b31c-7075ff6ed983.k8s.civo.com
+
+Nodes:
++------------------+-----------------+--------+
+| Name             | IP              | Status |
++------------------+-----------------+--------+
+| kube-master-40e4 | 185.136.235.106 | ACTIVE |
+| kube-node-3daf   |                 | ACTIVE |
+| kube-node-715c   |                 | ACTIVE |
++------------------+-----------------+--------+
+
+Installed marketplace applications:
++----------------+-----------+-----------+--------------+
+| Name           | Version   | Installed | Category     |
++----------------+-----------+-----------+--------------+
+| Traefik        | (default) | Yes       | architecture |
+| Helm           | 2.14.3    | Yes       | management   |
+| metrics-server | (default) | Yes       | architecture |
+| cert-manager   | v0.11.0   | Yes       | architecture |
++----------------+-----------+-----------+--------------+
+
+
+
+</code></pre></li>
+<li>
+<p>Verifying DNS reccords:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ dig +short @9.9.9.9 foaas.sample.YOUR.CUSTOM.DOMAIN
+</code></pre></div><p>In my example, we can confirm that it resolves to my current cluster IP, which is the expected outcome once the DNS are propaggated:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ dig +short @9.9.9.9 foaas.sample.k3cloud.gq
+   
+185.136.235.106
+</code></pre></div><p>HINT: At this point, if you wanna avoid using a custom DNS name, you have a couple options:</p>
+<ul>
+<li>Either use Civo&rsquo;s fqdn (smth in the likes of: <code>8bcc05ef-5f90-4cf9-b31c-7075ff6ed983.k8s.civo.com</code> -which is my k3cloud.gq cluster fqdn-)</li>
+<li>Use the local resolver (via <code>systemd-resolve --status</code>, updating <code>/etc/hosts</code> or any other valid method, depending on your distro/setup)</li>
+</ul>
+<p>However, even if we can skip the custom DNS thingy, having a custom domain name is the best option in order to have an env similar to real-world scenarios.</p>
+<p>On the bright side, as stated before, you can use Freenom.com in order to register a free domain name to play around with your shiny new cluster.</p>
+</li>
+<li>
+<p>Deploy our PoC, the FOAAS API (Finally!)</p>
+<pre><code>$ kubectl apply -f samples/fooas/
+       
+    deployment.apps/foaas-sample-deploy created
+    ingress.extensions/foaas-sample-ingress created
+    issuer.cert-manager.io/foaas-sample-letsencrypt created
+    service/foaas-sample-svc created
+
+</code></pre><p>If you didn&rsquo;t change it, this sample/PoC API is deployed in the default namespace, we can check the status of our recently applied manifest running:</p>
+<pre><code>$ kubectl get po,svc,cert,ingress
+</code></pre><p>Which -if all went ok- should return something similar to:</p>
+<pre><code>NAME                                       READY   STATUS    RESTARTS   AGE
+pod/foaas-sample-deploy-59b9c7d76f-g4rjj   1/1     Running   0          3m43s
+
+NAME                       TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes         ClusterIP   192.168.128.1    &lt;none&gt;        443/TCP   64m
+service/foaas-sample-svc   ClusterIP   192.168.198.98   &lt;none&gt;        80/TCP    3m43s
+
+NAME                                              READY   SECRET                AGE
+certificate.cert-manager.io/foaas-sample-secret   True    foaas-sample-secret   3m43s
+
+NAME                                      HOSTS                     ADDRESS           PORTS     AGE
+ingress.extensions/foaas-sample-ingress   foaas.sample.k3cloud.gq   185.136.235.106   80, 443   3m44s
+
+</code></pre><p>Here we can verify that <code>svc</code>, <code>deployment</code> and <code>pods</code> are ok, and we can also see that the <code>ingress</code> is listening in our <strong>custom domain</strong> (<em>foaas.sample.k3cloud.gq</em>), and also the LetsEncrypt SSL <code>cert</code> is valid and has been applied.</p>
+</li>
+<li>
+<p>Test your app:</p>
+<pre><code>$ curl  -H 'Accept: text/plain'  foaas.sample.k3cloud.gq/rockstar/k3s/renato
+
+    &quot;k3s, you're a fucking Rock Star!&quot; -renato
+</code></pre><p>Side notes:</p>
+<ul>
+<li>In addition to interfacing with the API via curl/wget/whatever, you can check the valid parameters and documentation browsing to <a href="https://foaas.sample.k3cloud.gq">https://foaas.sample.k3cloud.gq</a>.
+(Once again, remember to run the tests using your newly created custom domain).</li>
+<li>As you can see in <code>foaas-sample-deploy.yaml</code> the deployed FOAAS image is a custom build available in <a href="https://hub.docker.com/r/eif0/foaas">my dockerhub</a>, this is a 100% functional build I run with extra configs and settings, but feel free to use the original repo and build your own image if you prefer. More on how to manage pipelines and deploy your custom images to k3s in future articles.</li>
+</ul>
+</li>
+</ol>
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+            
+              <span class="button next">
+                <a href="https://docs.k3cloud.gq/posts/vedd/">
+                  <span class="button__text">Welcome to the Lab!</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <b>- ♪ ♫ ♬ -</b>
+
+      <div class="copyright">
+        <span>.Built with ❤ using <a TARGET="_blank" href="https://k3s.io/">k3s</a>.</span>
+
+      </div>
+    
+  </div>
+</footer>
+
+<script src="https://docs.k3cloud.gq/assets/main.js"></script>
+<script src="https://docs.k3cloud.gq/assets/prism.js"></script>
+
+      
+    </div>
+
+    
+  </body>
+</html>

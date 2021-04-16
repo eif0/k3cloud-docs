@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on k3cloud&#39;s docs &amp; stuff</title>
+    <link>https://docs.k3cloud.gq/categories/</link>
+    <description>Recent content in Categories on k3cloud&#39;s docs &amp; stuff</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 21 May 2020 16:54:51 +0100</lastBuildDate>
+    
+	<atom:link href="https://docs.k3cloud.gq/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>civo</title>
+      <link>https://docs.k3cloud.gq/categories/civo/</link>
+      <pubDate>Thu, 21 May 2020 16:54:51 +0100</pubDate>
+      
+      <guid>https://docs.k3cloud.gq/categories/civo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>k3s</title>
+      <link>https://docs.k3cloud.gq/categories/k3s/</link>
+      <pubDate>Thu, 21 May 2020 16:54:51 +0100</pubDate>
+      
+      <guid>https://docs.k3cloud.gq/categories/k3s/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>EDD2021</title>
+      <link>https://docs.k3cloud.gq/categories/edd2021/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://docs.k3cloud.gq/categories/edd2021/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ERNI</title>
+      <link>https://docs.k3cloud.gq/categories/erni/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://docs.k3cloud.gq/categories/erni/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

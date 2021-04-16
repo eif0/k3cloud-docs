@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://docs.k3cloud.gq/categories/</loc>
+    <lastmod>2020-05-21T16:54:51+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://docs.k3cloud.gq/categories/civo/</loc>
+    <lastmod>2020-05-21T16:54:51+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://docs.k3cloud.gq/categories/k3s/</loc>
+    <lastmod>2020-05-21T16:54:51+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://docs.k3cloud.gq/posts/k3s-gitops-lab-part1/</loc>
+    <lastmod>2020-05-21T16:54:51+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://docs.k3cloud.gq/posts/</loc>
+    <lastmod>2020-05-21T16:54:51+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://docs.k3cloud.gq/about/</loc>
+    <lastmod>2019-01-15T14:54:51+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://docs.k3cloud.gq/archives/</loc>
+    <lastmod>2019-01-15T14:54:51+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://docs.k3cloud.gq/</loc>
+    <lastmod>2019-01-15T14:54:51+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://docs.k3cloud.gq/categories/edd2021/</loc>
+  </url>
+  
+  <url>
+    <loc>https://docs.k3cloud.gq/categories/erni/</loc>
+  </url>
+  
+  <url>
+    <loc>https://docs.k3cloud.gq/tags/</loc>
+  </url>
+  
+  <url>
+    <loc>https://docs.k3cloud.gq/posts/vedd/</loc>
+  </url>
+  
+</urlset>

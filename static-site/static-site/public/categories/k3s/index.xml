@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>k3s on k3cloud&#39;s docs &amp; stuff</title>
+    <link>https://docs.k3cloud.gq/categories/k3s/</link>
+    <description>Recent content in k3s on k3cloud&#39;s docs &amp; stuff</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 21 May 2020 16:54:51 +0100</lastBuildDate>
+    
+	<atom:link href="https://docs.k3cloud.gq/categories/k3s/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>k3s GitOps Lab | Part 1: Cluster Bootstraping &#43; API PoC Deployment</title>
+      <link>https://docs.k3cloud.gq/posts/k3s-gitops-lab-part1/</link>
+      <pubDate>Thu, 21 May 2020 16:54:51 +0100</pubDate>
+      
+      <guid>https://docs.k3cloud.gq/posts/k3s-gitops-lab-part1/</guid>
+      <description>&lt;p&gt;This article covers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Bootstraping a new k3s cluster from scratch
+&lt;ul&gt;
+&lt;li&gt;creating a free cluster using civo&amp;rsquo;s #kube100&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Checking the cluster state&lt;/li&gt;
+&lt;li&gt;Deploy a PoC test API using manifest files (.yaml)&lt;/li&gt;
+&lt;li&gt;General testing&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

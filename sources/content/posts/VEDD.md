@@ -1,5 +1,5 @@
 ---
-title: "Welcome to the Lab!"
+title: "Welcome to the ERNI EDD!"
 draft: false
 showthedate: true
 categories: ["EDD2021", "ERNI"]
